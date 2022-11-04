@@ -1,33 +1,41 @@
 "use strict";
 
+const getData = ({
+    url: url,
+    data: data
+}) => {
+    return fetch(url, {
+            method: 'GET',
+            body: data,
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+        })
+        .then(response => response.json())
+        .catch(error => console.log(error));
+};
 
-const sendData = (url, res) => {
-
+const sendData = ({
+    url: url,
+    data: data
+}) => {
     fetch(url, {
             method: 'POST',
+            body: data,
             headers: {
-                'Content-Type': 'application/json;charset=utf-8'
+                'Content-type': 'application/json; charset=UTF-8',
             },
-            body: JSON.stringify(res)
         })
         .then(response => response.json())
-        .then(data => {
-            console.log(data);
-        })
-        .catch(error => {
-            console.log(error);
-        })
-}
+        .then(data => console.log(data))
+        .catch(error => console.log(error));
+};
 
-const getData = (url, func) => {
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            func("https://jsonplaceholder.typicode.com/posts", data)
-        })
-        .catch(error => {
-            console.log(error);
-        })
-}
-
-const user = getData("db.json", sendData);
+getData({
+    url: 'db.json'
+}).then(data =>
+    sendData({
+        url: 'https://jsonplaceholder.typicode.com/posts',
+        data: JSON.stringify(data)
+    })
+);
