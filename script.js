@@ -1,25 +1,23 @@
 "use strict";
 
-let user;
-
-const sendData = (res) => {
+const sendData = (url, res) => {
     let xhr = new XMLHttpRequest();
-    xhr.open("POST", "https://jsonplaceholder.typicode.com/posts");
-    console.log(res)
+    xhr.open("POST", url);
     xhr.send(JSON.stringify(
         res
     ));
     xhr.onload = () => console.log(xhr.response);
 }
 
-const getData = (func) => {
-    let xhr = new XMLHttpRequest();
-    xhr.open("GET", "db.json");
-    xhr.send();
-    xhr.onload = () => {
-        user = xhr.response;
-        func(user);
-    }
+const getData = (url, func) => {
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            func("https://jsonplaceholder.typicode.com/posts", data)
+        })
+        .catch(error => {
+            console.log(error);
+        })
 }
 
-getData(sendData)
+getData("db.json", sendData);
