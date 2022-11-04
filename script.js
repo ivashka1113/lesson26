@@ -31,9 +31,13 @@ const sendData = ({
         .catch(error => console.log(error));
 };
 
-getData({
+
+
+const user = getData({
     url: 'db.json'
-}).then(data =>
+})
+
+user.then(data =>
     sendData({
         url: 'https://jsonplaceholder.typicode.com/posts',
         data: JSON.stringify(data)
