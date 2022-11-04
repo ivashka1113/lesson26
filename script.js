@@ -21,9 +21,10 @@ const sendData = ({
 }) => {
     let xhr = new XMLHttpRequest();
     xhr.open("POST", url);
-    xhr.send(JSON.stringify(
+    xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+    xhr.send(
         data
-    ));
+    );
     xhr.onload = () => console.log(xhr.response);
     xhr.onerror = function () {
         console.log(`Ошибка`);
